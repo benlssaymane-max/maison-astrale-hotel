@@ -1,0 +1,10 @@
+﻿{
+  "name": "maison-astrale-hotel",
+  "version": "1.1.0",
+  "private": true,
+  "description": "Ultra premium luxury hotel website with Stripe checkout and booking API",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "stripe": "^18.5.0"
+  }
+}

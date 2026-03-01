@@ -67,7 +67,7 @@
           <div>
             <h3 data-i18n="room1_title">Suite Signature Mer</h3>
             <p data-i18n="room1_text">120 m², terrasse panoramique, majordome dédié, bain marbre et salon privé.</p>
-            <button class="btn btn-gold" data-i18n="room_book">Réserver cette suite</button>
+            <button class="btn btn-gold room-book-btn" data-room="suite_signature" data-i18n="room_book">Réserver cette suite</button>
           </div>
         </article>
         <article class="room-card reveal">
@@ -75,7 +75,7 @@
           <div>
             <h3 data-i18n="room2_title">Chambre Prestige Jardin</h3>
             <p data-i18n="room2_text">Lumière naturelle, literie couture, espace lounge et service petit-déjeuner en suite.</p>
-            <button class="btn btn-gold" data-i18n="room_book">Réserver cette suite</button>
+            <button class="btn btn-gold room-book-btn" data-room="chambre_prestige" data-i18n="room_book">Réserver cette suite</button>
           </div>
         </article>
         <article class="room-card reveal">
@@ -83,7 +83,7 @@
           <div>
             <h3 data-i18n="room3_title">Penthouse Astrale</h3>
             <p data-i18n="room3_text">Piscine privée, cuisine de chef, vue mer à 270° et expérience concierge 24/7.</p>
-            <button class="btn btn-gold" data-i18n="room_book">Réserver cette suite</button>
+            <button class="btn btn-gold room-book-btn" data-room="penthouse_astrale" data-i18n="room_book">Réserver cette suite</button>
           </div>
         </article>
       </div>
@@ -169,7 +169,7 @@
         <h2 data-i18n="contact_title">Préparez votre prochain séjour</h2>
       </div>
       <div class="contact-grid reveal">
-        <form class="booking-form" aria-label="Formulaire de réservation">
+        <form class="booking-form" aria-label="Formulaire de réservation" id="bookingForm">
           <label>
             <span data-i18n="form_name">Nom complet</span>
             <input type="text" name="name" required />
@@ -190,21 +190,27 @@
           </div>
           <label>
             <span data-i18n="form_room">Type de chambre</span>
-            <select name="room">
-              <option data-i18n="room_opt_1">Suite Signature Mer</option>
-              <option data-i18n="room_opt_2">Chambre Prestige Jardin</option>
-              <option data-i18n="room_opt_3">Penthouse Astrale</option>
+            <select name="room" id="roomSelect">
+              <option value="suite_signature" data-i18n="room_opt_1">Suite Signature Mer</option>
+              <option value="chambre_prestige" data-i18n="room_opt_2">Chambre Prestige Jardin</option>
+              <option value="penthouse_astrale" data-i18n="room_opt_3">Penthouse Astrale</option>
             </select>
           </label>
-          <fieldset>
-            <legend data-i18n="form_payment">Paiement sécurisé</legend>
-            <div class="payment-grid">
-              <input type="text" placeholder="Card Number" aria-label="Card Number" required />
-              <input type="text" placeholder="MM/YY" aria-label="Expiration" required />
-              <input type="text" placeholder="CVC" aria-label="CVC" required />
-            </div>
-          </fieldset>
-          <button class="btn btn-gold" type="submit" data-i18n="form_submit">Confirmer la réservation</button>
+          <label>
+            <span data-i18n="form_guests">Voyageurs</span>
+            <select name="guests" id="guestsSelect">
+              <option value="1">1</option>
+              <option value="2" selected>2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
+          </label>
+          <div class="booking-summary" id="bookingSummary">
+            <p><strong data-i18n="summary_title">Résumé instantané</strong></p>
+            <p id="summaryLine" data-i18n="summary_idle">Sélectionnez vos dates pour afficher le tarif total.</p>
+          </div>
+          <p class="booking-status" id="bookingStatus" role="status" aria-live="polite"></p>
+          <button class="btn btn-gold" id="checkoutBtn" type="submit" data-i18n="form_submit">Vérifier et payer en sécurité</button>
         </form>
         <div class="map-wrap">
           <iframe

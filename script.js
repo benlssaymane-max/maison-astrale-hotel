@@ -52,8 +52,10 @@
     room_opt_1: "Suite Signature Mer",
     room_opt_2: "Chambre Prestige Jardin",
     room_opt_3: "Penthouse Astrale",
-    form_payment: "Paiement sécurisé",
-    form_submit: "Confirmer la réservation",
+    form_guests: "Voyageurs",
+    summary_title: "Résumé instantané",
+    summary_idle: "Sélectionnez vos dates pour afficher le tarif total.",
+    form_submit: "Vérifier et payer en sécurité",
     chat_title: "Assistant Concierge",
     chat_text: "Besoin d'un transfert, d'une table privée ou d'une recommandation locale ?",
     chat_spa: "Réserver un soin spa",
@@ -115,8 +117,10 @@
     room_opt_1: "Sea Signature Suite",
     room_opt_2: "Prestige Garden Room",
     room_opt_3: "Astrale Penthouse",
-    form_payment: "Secure payment",
-    form_submit: "Confirm booking",
+    form_guests: "Guests",
+    summary_title: "Instant quote",
+    summary_idle: "Select your dates to display your full amount.",
+    form_submit: "Check availability and pay securely",
     chat_title: "Concierge Assistant",
     chat_text: "Need a transfer, a private table, or a local recommendation?",
     chat_spa: "Book a spa ritual",
@@ -128,6 +132,46 @@
 };
 
 let currentLang = "fr";
+let latestQuote = null;
+
+const bookingForm = document.getElementById("bookingForm");
+const roomSelect = document.getElementById("roomSelect");
+const guestsSelect = document.getElementById("guestsSelect");
+const summaryLine = document.getElementById("summaryLine");
+const bookingStatus = document.getElementById("bookingStatus");
+const checkoutBtn = document.getElementById("checkoutBtn");
+const checkinInput = bookingForm?.elements?.checkin;
+const checkoutInput = bookingForm?.elements?.checkout;
+
+const uiText = {
+  fr: {
+    checking: "Vérification disponibilité...",
+    available: "Suite disponible. Finalisez le paiement sécurisé.",
+    unavailable: "Aucune disponibilité sur ces dates. Essayez d'autres dates.",
+    invalidDates: "La date de départ doit être après la date d'arrivée.",
+    genericError: "Service temporairement indisponible.",
+    processing: "Redirection vers le paiement sécurisé...",
+    paid: "Paiement confirmé. Votre équipe conciergerie vous contacte sous peu.",
+    canceled: "Paiement annulé. Votre sélection est toujours disponible selon les dates."
+  },
+  en: {
+    checking: "Checking live availability...",
+    available: "Suite available. Complete secure checkout.",
+    unavailable: "No suite available for these dates. Please try others.",
+    invalidDates: "Check-out date must be after check-in.",
+    genericError: "Service temporarily unavailable.",
+    processing: "Redirecting to secure checkout...",
+    paid: "Payment confirmed. Our concierge team will contact you shortly.",
+    canceled: "Payment canceled. Your selection remains available depending on dates."
+  }
+};
+
+const formatCurrency = (cents) => {
+  return new Intl.NumberFormat(currentLang === "fr" ? "fr-FR" : "en-GB", {
+    style: "currency",
+    currency: "EUR"
+  }).format(cents / 100);
+};
 
 const translatePage = (lang) => {
   document.documentElement.lang = lang;
@@ -142,6 +186,10 @@ const translatePage = (lang) => {
   const audioLabel = document.getElementById("audioToggle");
   if (audioLabel && !audioLabel.dataset.playing) {
     audioLabel.textContent = lang === "fr" ? "Ambiance: Off" : "Ambience: Off";
+  }
+
+  if (!latestQuote && summaryLine) {
+    summaryLine.textContent = translations[lang].summary_idle;
   }
 };
 
@@ -164,6 +212,9 @@ langToggle?.addEventListener("click", () => {
   currentLang = currentLang === "fr" ? "en" : "fr";
   langToggle.textContent = currentLang === "fr" ? "EN" : "FR";
   translatePage(currentLang);
+  if (latestQuote) {
+    renderQuote(latestQuote);
+  }
 });
 
 const audio = document.getElementById("ambienceAudio");
@@ -196,7 +247,6 @@ conciergeToggle?.addEventListener("click", () => {
   if (!conciergePanel) {
     return;
   }
-
   conciergePanel.hidden = !conciergePanel.hidden;
 });
 
@@ -226,19 +276,146 @@ document.querySelectorAll("[data-chat]").forEach((btn) => {
   });
 });
 
-const form = document.querySelector(".booking-form");
-form?.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const message = currentLang === "fr"
-    ? "Merci. Votre demande de réservation est envoyée. Notre équipe confirme sous peu."
-    : "Thank you. Your booking request has been sent. Our team will confirm shortly.";
-  alert(message);
-  form.reset();
+function getBookingPayload() {
+  return {
+    roomId: roomSelect?.value,
+    guests: guestsSelect?.value,
+    name: bookingForm?.elements?.name?.value?.trim(),
+    email: bookingForm?.elements?.email?.value?.trim(),
+    checkin: checkinInput?.value,
+    checkout: checkoutInput?.value,
+    locale: currentLang
+  };
+}
+
+function setStatus(message, isError = false) {
+  if (!bookingStatus) {
+    return;
+  }
+
+  bookingStatus.textContent = message;
+  bookingStatus.classList.toggle("error", isError);
+}
+
+function renderQuote(quote) {
+  if (!summaryLine) {
+    return;
+  }
+
+  summaryLine.textContent = currentLang === "fr"
+    ? `${quote.roomName}, ${quote.nights} nuit(s), total ${formatCurrency(quote.totalCents)}.`
+    : `${quote.roomName}, ${quote.nights} night(s), total ${formatCurrency(quote.totalCents)}.`;
+}
+
+async function refreshQuote() {
+  const payload = getBookingPayload();
+
+  if (!payload.checkin || !payload.checkout) {
+    latestQuote = null;
+    if (summaryLine) {
+      summaryLine.textContent = translations[currentLang].summary_idle;
+    }
+    setStatus("");
+    return;
+  }
+
+  if (payload.checkout <= payload.checkin) {
+    latestQuote = null;
+    setStatus(uiText[currentLang].invalidDates, true);
+    return;
+  }
+
+  setStatus(uiText[currentLang].checking);
+
+  try {
+    const response = await fetch("/api/check-availability", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+      latestQuote = null;
+      setStatus(response.status === 409 ? uiText[currentLang].unavailable : uiText[currentLang].genericError, true);
+      return;
+    }
+
+    latestQuote = data;
+    renderQuote(data);
+    setStatus(uiText[currentLang].available);
+  } catch {
+    latestQuote = null;
+    setStatus(uiText[currentLang].genericError, true);
+  }
+}
+
+let quoteDebounce;
+[roomSelect, guestsSelect, checkinInput, checkoutInput].forEach((input) => {
+  input?.addEventListener("change", () => {
+    clearTimeout(quoteDebounce);
+    quoteDebounce = setTimeout(refreshQuote, 220);
+  });
 });
+
+bookingForm?.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const payload = getBookingPayload();
+  if (!payload.name || !payload.email || !payload.checkin || !payload.checkout) {
+    setStatus(uiText[currentLang].genericError, true);
+    return;
+  }
+
+  if (payload.checkout <= payload.checkin) {
+    setStatus(uiText[currentLang].invalidDates, true);
+    return;
+  }
+
+  checkoutBtn.disabled = true;
+  setStatus(uiText[currentLang].processing);
+
+  try {
+    const response = await fetch("/api/create-checkout-session", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await response.json();
+    if (!response.ok || !data.checkoutUrl) {
+      throw new Error(data.error || "checkout_failed");
+    }
+
+    window.location.href = data.checkoutUrl;
+  } catch {
+    setStatus(uiText[currentLang].genericError, true);
+    checkoutBtn.disabled = false;
+  }
+});
+
+const paymentResult = new URLSearchParams(window.location.search).get("payment");
+if (paymentResult === "success") {
+  setStatus(uiText[currentLang].paid);
+}
+if (paymentResult === "cancel") {
+  setStatus(uiText[currentLang].canceled, true);
+}
 
 const year = document.getElementById("year");
 if (year) {
   year.textContent = new Date().getFullYear().toString();
 }
+
+document.querySelectorAll(".room-book-btn").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const room = btn.getAttribute("data-room");
+    if (roomSelect && room) {
+      roomSelect.value = room;
+      roomSelect.dispatchEvent(new Event("change"));
+    }
+    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+});
 
 translatePage(currentLang);
