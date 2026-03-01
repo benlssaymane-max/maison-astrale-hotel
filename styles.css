@@ -301,117 +301,46 @@ p {
 
 .hero {
   min-height: 100vh;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: flex-end;
   position: relative;
   overflow: hidden;
+  padding: 7.5rem 0 3.2rem;
 }
 
-.hero-palace {
+.hero-bg-slider {
   position: absolute;
   inset: 0;
   z-index: 0;
   overflow: hidden;
 }
 
-.hero-palace::before {
+.hero-arch-lines {
   content: "";
   position: absolute;
-  left: 50%;
-  top: 4%;
-  width: min(900px, 88vw);
-  height: min(900px, 88vw);
-  transform: translateX(-50%);
-  border-radius: 50% 50% 0 0;
-  border: 1px solid rgba(241, 212, 155, 0.2);
-  opacity: 0.45;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(90deg, transparent 0, rgba(241, 212, 155, 0.12) 50%, transparent 100%),
+    repeating-linear-gradient(90deg, transparent 0 84px, rgba(255, 255, 255, 0.04) 84px 85px);
+  opacity: 0.28;
   pointer-events: none;
-}
-
-.palace-glow {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 50% 40%, rgba(250, 222, 170, 0.45), rgba(208, 146, 62, 0.19) 32%, transparent 56%),
-    linear-gradient(180deg, #24170f 0%, #130d09 62%, #080808 100%);
-}
-
-.palace-door {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 50.5%;
-  background:
-    linear-gradient(90deg, rgba(0, 0, 0, 0.3), transparent 22%, rgba(0, 0, 0, 0.35)),
-    repeating-linear-gradient(90deg, rgba(168, 118, 51, 0.26) 0 2px, rgba(83, 56, 24, 0.28) 2px 14px),
-    linear-gradient(180deg, #1c120a 0%, #140d07 60%, #0f0a06 100%);
-  border: 1px solid rgba(241, 212, 155, 0.18);
-  box-shadow: inset 0 0 0 1px rgba(241, 212, 155, 0.08);
-  transition: transform 2.2s cubic-bezier(0.18, 0.84, 0.16, 1), filter 2.2s ease;
-}
-
-.palace-door::before {
-  content: "";
-  position: absolute;
-  inset: 8% 9%;
-  border: 1px solid rgba(241, 212, 155, 0.2);
-}
-
-.palace-door.left {
-  left: 0;
-}
-
-.palace-door.right {
-  right: 0;
-}
-
-.doors-open .palace-door.left {
-  transform: translateX(-101%);
-  filter: brightness(0.85);
-}
-
-.doors-open .palace-door.right {
-  transform: translateX(101%);
-  filter: brightness(0.85);
-}
-
-.palace-sparks {
-  position: absolute;
-  inset: 0;
-  background-image:
-    radial-gradient(circle at 20% 35%, rgba(255, 255, 255, 0.6) 0 1px, transparent 2px),
-    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.5) 0 1px, transparent 2px),
-    radial-gradient(circle at 65% 70%, rgba(241, 212, 155, 0.5) 0 1px, transparent 2px),
-    radial-gradient(circle at 35% 60%, rgba(241, 212, 155, 0.4) 0 1px, transparent 2px);
-  background-size: 220px 220px, 260px 260px, 320px 320px, 300px 300px;
-  animation: sparkDrift 20s linear infinite;
-  opacity: 0.35;
-}
-
-@keyframes sparkDrift {
-  from { transform: translateY(0); }
-  to { transform: translateY(40px); }
 }
 
 .overlay {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 50% 68%, rgba(224, 173, 92, 0.15), transparent 49%),
-    linear-gradient(180deg, rgba(5, 5, 6, 0.3), rgba(6, 5, 5, 0.87));
-}
-
-.day-mode .hero-palace .palace-glow {
-  background:
-    radial-gradient(circle at 50% 38%, rgba(252, 228, 179, 0.42), rgba(221, 169, 87, 0.24) 30%, transparent 60%),
-    linear-gradient(180deg, #2a2219 0%, #17120d 70%, #0d0a08 100%);
+    linear-gradient(180deg, rgba(5, 6, 10, 0.28), rgba(6, 7, 9, 0.84)),
+    radial-gradient(circle at 25% 20%, rgba(220, 180, 112, 0.16), transparent 42%);
 }
 
 .hero-content {
   position: relative;
-  z-index: 2;
-  width: min(820px, 90vw);
-  text-align: center;
+  z-index: 3;
+  width: var(--container);
+  margin: 0 auto;
+  text-align: left;
 }
 
 .hero-kicker {
@@ -436,14 +365,15 @@ p {
 }
 
 .hero h1 {
-  font-size: clamp(2.7rem, 7vw, 5.2rem);
-  line-height: 1.04;
+  font-size: clamp(2.9rem, 7vw, 6rem);
+  line-height: 0.98;
   text-shadow: 0 10px 36px rgba(0, 0, 0, 0.45);
+  max-width: 900px;
 }
 
 .hero p {
-  max-width: 650px;
-  margin: 1rem auto 0;
+  max-width: 700px;
+  margin: 1rem 0 0;
   color: #f5efe5;
 }
 
@@ -451,19 +381,8 @@ p {
   margin-top: 1.8rem;
   display: flex;
   gap: 0.9rem;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
-}
-
-.hero-slider {
-  margin: 1.2rem auto 0;
-  width: min(760px, 92%);
-  height: 180px;
-  border-radius: 16px;
-  overflow: hidden;
-  position: relative;
-  border: 1px solid rgba(241, 212, 155, 0.3);
-  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.4);
 }
 
 .hero-slide {
@@ -481,13 +400,45 @@ p {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
+}
+
+.hero-metrics {
+  margin-top: 1.6rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+  max-width: 760px;
+}
+
+.hero-metrics article {
+  background: rgba(7, 7, 7, 0.52);
+  border: 1px solid rgba(241, 212, 155, 0.22);
+  border-radius: 12px;
+  padding: 0.6rem 0.75rem;
+}
+
+.hero-metrics strong {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.25rem;
+  letter-spacing: 0.04em;
+  color: #f1d49b;
+}
+
+.hero-metrics span {
+  display: block;
+  margin-top: 0.1rem;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #deccac;
 }
 
 .hero-trust {
-  margin: 0.95rem auto 0;
-  width: min(860px, 96%);
+  margin: 1rem 0 0;
+  width: min(930px, 100%);
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
   gap: 0.7rem;
   font-size: 0.78rem;
@@ -505,7 +456,7 @@ p {
 .audio-toggle {
   position: absolute;
   right: 2rem;
-  bottom: 2rem;
+  bottom: 1.5rem;
   z-index: 2;
   background: rgba(0, 0, 0, 0.5);
   color: var(--text);
@@ -1036,8 +987,9 @@ fieldset {
     grid-template-columns: 1fr;
   }
 
-  .hero-slider {
-    height: 150px;
+  .hero-metrics {
+    grid-template-columns: 1fr 1fr 1fr;
+    max-width: 100%;
   }
 }
 
@@ -1053,7 +1005,7 @@ fieldset {
 
   .hero h1 {
     font-size: 2.4rem;
-    line-height: 1.07;
+    line-height: 1.03;
   }
 
   .hero-kicker {
@@ -1061,13 +1013,18 @@ fieldset {
     letter-spacing: 0.13em;
   }
 
-  .hero-slider {
-    height: 120px;
+  .hero {
+    align-items: flex-end;
+    padding-bottom: 2.5rem;
   }
 
   .hero-trust {
     width: 100%;
     justify-content: flex-start;
+  }
+
+  .hero-metrics {
+    grid-template-columns: 1fr;
   }
 
   .section {

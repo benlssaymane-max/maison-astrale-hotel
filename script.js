@@ -13,6 +13,9 @@
     hero_kicker: "Collection Privée · Since 1928",
     hero_title: "L'art de l'hospitalité en version absolue",
     hero_text: "Un sanctuaire contemporain où chaque détail célèbre le calme, le prestige et l'exclusivité.",
+    hero_metric_1: "Vue panoramique iconique",
+    hero_metric_2: "Conciergerie privée",
+    hero_metric_3: "Expériences signature",
     trust_rating: "4.9/5 · 2 800+ avis vérifiés",
     trust_award: "World Luxury Hotel Awards",
     audio_label: "Ambiance: Off",
@@ -94,6 +97,9 @@
     hero_kicker: "Private Collection · Since 1928",
     hero_title: "Hospitality, elevated to an art form",
     hero_text: "A contemporary sanctuary where every detail embodies calm, prestige, and exclusivity.",
+    hero_metric_1: "Iconic skyline views",
+    hero_metric_2: "Private concierge",
+    hero_metric_3: "Signature experiences",
     trust_rating: "4.9/5 · 2,800+ verified reviews",
     trust_award: "World Luxury Hotel Awards",
     audio_label: "Ambience: Off",
@@ -292,12 +298,6 @@ function applyDayNightMode() {
   const hour = new Date().getHours();
   const isDay = hour >= 7 && hour < 19;
   document.body.classList.toggle("day-mode", isDay);
-}
-
-function runHeroDoorSequence() {
-  window.setTimeout(() => {
-    document.body.classList.add("doors-open");
-  }, 350);
 }
 
 function startHeroSlider() {
@@ -573,7 +573,6 @@ document.querySelectorAll(".room-book-btn").forEach((btn) => {
 translatePage(currentLang);
 updateBookingSteps();
 applyDayNightMode();
-runHeroDoorSequence();
 startHeroSlider();
 updateHeaderState();
 window.addEventListener("scroll", updateHeaderState, { passive: true });

@@ -57,12 +57,18 @@
 
   <main>
     <section id="home" class="hero parallax">
-      <div class="hero-palace" aria-hidden="true">
-        <div class="palace-glow"></div>
-        <div class="palace-door left" id="doorLeft"></div>
-        <div class="palace-door right" id="doorRight"></div>
-        <div class="palace-sparks"></div>
+      <div class="hero-bg-slider" aria-hidden="true">
+        <figure class="hero-slide active">
+          <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=2200&q=80" alt="Dubai skyline at night" fetchpriority="high" />
+        </figure>
+        <figure class="hero-slide">
+          <img src="https://images.unsplash.com/photo-1526495124232-a04e1849168c?auto=format&fit=crop&w=2200&q=80" alt="Luxury tower architecture Dubai" loading="eager" />
+        </figure>
+        <figure class="hero-slide">
+          <img src="https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=2200&q=80" alt="Luxury skyline and lights" loading="lazy" />
+        </figure>
       </div>
+      <div class="hero-arch-lines" aria-hidden="true"></div>
       <div class="overlay"></div>
       <div class="hero-content reveal">
         <p class="eyebrow" data-i18n="hero_eyebrow">Hôtel 5 étoiles · Côte d'Azur</p>
@@ -73,16 +79,19 @@
           <a href="#contact" class="btn btn-gold" data-i18n="cta_book">Réserver maintenant</a>
           <a href="#experience" class="btn btn-outline" data-i18n="cta_discover">Découvrir l'expérience</a>
         </div>
-        <div class="hero-slider" aria-hidden="true">
-          <figure class="hero-slide active">
-            <img src="https://images.unsplash.com/photo-1563911302283-d2bc129e7570?auto=format&fit=crop&w=1400&q=80" alt="Couple au bord de piscine de luxe" fetchpriority="high" />
-          </figure>
-          <figure class="hero-slide">
-            <img src="https://images.unsplash.com/photo-1566669437685-d13565a6af99?auto=format&fit=crop&w=1400&q=80" alt="Service premium en chambre" loading="lazy" />
-          </figure>
-          <figure class="hero-slide">
-            <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1400&q=80" alt="Expérience bien-être de luxe" loading="lazy" />
-          </figure>
+        <div class="hero-metrics">
+          <article>
+            <strong>2,718 ft</strong>
+            <span data-i18n="hero_metric_1">Skyline view horizon</span>
+          </article>
+          <article>
+            <strong>24/7</strong>
+            <span data-i18n="hero_metric_2">Private concierge</span>
+          </article>
+          <article>
+            <strong>12</strong>
+            <span data-i18n="hero_metric_3">Signature experiences</span>
+          </article>
         </div>
         <div class="hero-trust">
           <span data-i18n="trust_rating">4.9/5 · 2 800+ avis vérifiés</span>
