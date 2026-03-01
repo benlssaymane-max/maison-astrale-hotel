@@ -1,5 +1,5 @@
 ﻿const Stripe = require("stripe");
-const { buildQuote } = require("./lib/booking");
+const { buildQuote, UPSELLS } = require("./lib/booking");
 
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
@@ -15,12 +15,13 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const { roomId, checkin, checkout, guests, name, email, locale } = req.body || {};
+    const { roomId, checkin, checkout, guests, name, email, locale, upsells } = req.body || {};
     const quote = buildQuote({
       roomId,
       checkinStr: checkin,
       checkoutStr: checkout,
-      guests
+      guests,
+      upsells
     });
 
     if (quote.error) {
@@ -42,6 +43,52 @@ module.exports = async function handler(req, res) {
     const successUrl = `${origin}/?payment=success`;
     const cancelUrl = `${origin}/?payment=cancel`;
 
+    const lineItems = [
+      {
+        quantity: 1,
+        price_data: {
+          currency: "eur",
+          unit_amount: quote.subtotalCents,
+          product_data: {
+            name: `${quote.room.name} (${quote.nights} nuits)`
+          }
+        }
+      },
+      {
+        quantity: 1,
+        price_data: {
+          currency: "eur",
+          unit_amount: quote.serviceFeeCents,
+          product_data: {
+            name: "Service premium"
+          }
+        }
+      },
+      {
+        quantity: 1,
+        price_data: {
+          currency: "eur",
+          unit_amount: quote.cityTaxCents,
+          product_data: {
+            name: "Taxe de séjour"
+          }
+        }
+      }
+    ];
+
+    quote.upsells.forEach((item) => {
+      lineItems.push({
+        quantity: 1,
+        price_data: {
+          currency: "eur",
+          unit_amount: UPSELLS[item].amountCents,
+          product_data: {
+            name: UPSELLS[item].name
+          }
+        }
+      });
+    });
+
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       success_url: successUrl,
@@ -53,40 +100,10 @@ module.exports = async function handler(req, res) {
         room_id: roomId,
         checkin,
         checkout,
-        guests: String(quote.guests)
+        guests: String(quote.guests),
+        upsells: quote.upsells.join(",") || "none"
       },
-      line_items: [
-        {
-          quantity: 1,
-          price_data: {
-            currency: "eur",
-            unit_amount: quote.subtotalCents,
-            product_data: {
-              name: `${quote.room.name} (${quote.nights} nuits)`
-            }
-          }
-        },
-        {
-          quantity: 1,
-          price_data: {
-            currency: "eur",
-            unit_amount: quote.serviceFeeCents,
-            product_data: {
-              name: "Service premium"
-            }
-          }
-        },
-        {
-          quantity: 1,
-          price_data: {
-            currency: "eur",
-            unit_amount: quote.cityTaxCents,
-            product_data: {
-              name: "Taxe de séjour"
-            }
-          }
-        }
-      ]
+      line_items: lineItems
     });
 
     return res.status(200).json({

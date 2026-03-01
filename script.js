@@ -10,6 +10,7 @@
     cta_book: "Réserver maintenant",
     cta_discover: "Découvrir l'expérience",
     hero_eyebrow: "Hôtel 5 étoiles · Côte d'Azur",
+    hero_kicker: "Collection Privée · Since 1928",
     hero_title: "L'art de l'hospitalité en version absolue",
     hero_text: "Un sanctuaire contemporain où chaque détail célèbre le calme, le prestige et l'exclusivité.",
     audio_label: "Ambiance: Off",
@@ -17,10 +18,13 @@
     rooms_title: "Résidences pensées pour l'exception",
     room1_title: "Suite Signature Mer",
     room1_text: "120 m², terrasse panoramique, majordome dédié, bain marbre et salon privé.",
+    room1_meta: "À partir de 1 800€ / nuit · Vue frontale mer",
     room2_title: "Chambre Prestige Jardin",
     room2_text: "Lumière naturelle, literie couture, espace lounge et service petit-déjeuner en suite.",
+    room2_meta: "À partir de 1 100€ / nuit · Jardin privé",
     room3_title: "Penthouse Astrale",
     room3_text: "Piscine privée, cuisine de chef, vue mer à 270° et expérience concierge 24/7.",
+    room3_meta: "À partir de 3 200€ / nuit · Piscine privée",
     room_book: "Réserver cette suite",
     services_eyebrow: "Services & Spa",
     services_title: "Bien-être, gastronomie et privilèges privés",
@@ -34,6 +38,9 @@
     exp_title: "Un récit de sérénité, de design et de distinction",
     exp_text1: "Chaque matin commence avec une lumière douce sur la Méditerranée, chaque soirée s'achève autour d'un service irréprochable.",
     exp_text2: "Maison Astrale met en scène un luxe discret: silencieux, personnalisé, profondément mémorable.",
+    timeline_1: "Petit-déjeuner privé face à la mer.",
+    timeline_2: "Rituel spa signature et sieste panoramique.",
+    timeline_3: "Dîner dégustation et terrasse étoilée.",
     gallery_eyebrow: "Galerie / Média",
     gallery_title: "Regards sur la propriété et ses horizons",
     social_title: "Instagram",
@@ -44,6 +51,9 @@
     review3: '"Le concierge a transformé notre séjour en souvenirs inoubliables."',
     contact_eyebrow: "Contact & Réservation",
     contact_title: "Préparez votre prochain séjour",
+    step_stay: "Séjour",
+    step_options: "Options",
+    step_payment: "Paiement",
     form_name: "Nom complet",
     form_email: "Email",
     form_checkin: "Arrivée",
@@ -53,6 +63,10 @@
     room_opt_2: "Chambre Prestige Jardin",
     room_opt_3: "Penthouse Astrale",
     form_guests: "Voyageurs",
+    upsell_title: "Options Signature",
+    upsell_spa: "Rituel Spa Privé (+220€)",
+    upsell_transfer: "Transfert Aéroport Premium (+160€)",
+    upsell_dinner: "Dîner Dégustation Privé (+290€)",
     summary_title: "Résumé instantané",
     summary_idle: "Sélectionnez vos dates pour afficher le tarif total.",
     form_submit: "Vérifier et payer en sécurité",
@@ -75,6 +89,7 @@
     cta_book: "Book now",
     cta_discover: "Discover the experience",
     hero_eyebrow: "5-Star Hotel · French Riviera",
+    hero_kicker: "Private Collection · Since 1928",
     hero_title: "Hospitality, elevated to an art form",
     hero_text: "A contemporary sanctuary where every detail embodies calm, prestige, and exclusivity.",
     audio_label: "Ambience: Off",
@@ -82,10 +97,13 @@
     rooms_title: "Residences designed for distinction",
     room1_title: "Sea Signature Suite",
     room1_text: "120 sqm, panoramic terrace, private butler, marble bath, and lounge salon.",
+    room1_meta: "From €1,800 / night · Full sea view",
     room2_title: "Prestige Garden Room",
     room2_text: "Natural light, couture bedding, private lounge area, and in-suite breakfast service.",
+    room2_meta: "From €1,100 / night · Private garden",
     room3_title: "Astrale Penthouse",
     room3_text: "Private pool, chef kitchen, 270° sea views, and 24/7 concierge experience.",
+    room3_meta: "From €3,200 / night · Private pool",
     room_book: "Reserve this suite",
     services_eyebrow: "Services & Spa",
     services_title: "Wellness, gastronomy, and private privileges",
@@ -99,6 +117,9 @@
     exp_title: "A narrative of serenity, design, and distinction",
     exp_text1: "Each morning opens with soft Mediterranean light, each evening closes with flawless service.",
     exp_text2: "Maison Astrale defines discreet luxury: silent, personal, and profoundly memorable.",
+    timeline_1: "Private breakfast facing the sea.",
+    timeline_2: "Signature spa ritual and panoramic rest.",
+    timeline_3: "Tasting dinner and starlit terrace.",
     gallery_eyebrow: "Gallery / Media",
     gallery_title: "Views of the estate and surrounding horizons",
     social_title: "Instagram",
@@ -109,6 +130,9 @@
     review3: '"The concierge transformed our stay into unforgettable moments."',
     contact_eyebrow: "Contact & Booking",
     contact_title: "Plan your next stay",
+    step_stay: "Stay",
+    step_options: "Options",
+    step_payment: "Payment",
     form_name: "Full name",
     form_email: "Email",
     form_checkin: "Check-in",
@@ -118,6 +142,10 @@
     room_opt_2: "Prestige Garden Room",
     room_opt_3: "Astrale Penthouse",
     form_guests: "Guests",
+    upsell_title: "Signature Options",
+    upsell_spa: "Private Spa Ritual (+€220)",
+    upsell_transfer: "Premium Airport Transfer (+€160)",
+    upsell_dinner: "Private Tasting Dinner (+€290)",
     summary_title: "Instant quote",
     summary_idle: "Select your dates to display your full amount.",
     form_submit: "Check availability and pay securely",
@@ -131,6 +159,12 @@
   }
 };
 
+const UPSELL_PRICES = {
+  spa: 22000,
+  transfer: 16000,
+  dinner: 29000
+};
+
 let currentLang = "fr";
 let latestQuote = null;
 
@@ -142,6 +176,8 @@ const bookingStatus = document.getElementById("bookingStatus");
 const checkoutBtn = document.getElementById("checkoutBtn");
 const checkinInput = bookingForm?.elements?.checkin;
 const checkoutInput = bookingForm?.elements?.checkout;
+const stepProgressBar = document.getElementById("stepProgressBar");
+const stepEls = Array.from(document.querySelectorAll(".booking-steps .step"));
 
 const uiText = {
   fr: {
@@ -152,7 +188,9 @@ const uiText = {
     genericError: "Service temporairement indisponible.",
     processing: "Redirection vers le paiement sécurisé...",
     paid: "Paiement confirmé. Votre équipe conciergerie vous contacte sous peu.",
-    canceled: "Paiement annulé. Votre sélection est toujours disponible selon les dates."
+    canceled: "Paiement annulé. Votre sélection est toujours disponible selon les dates.",
+    extras: "Options",
+    total: "Total"
   },
   en: {
     checking: "Checking live availability...",
@@ -162,7 +200,9 @@ const uiText = {
     genericError: "Service temporarily unavailable.",
     processing: "Redirecting to secure checkout...",
     paid: "Payment confirmed. Our concierge team will contact you shortly.",
-    canceled: "Payment canceled. Your selection remains available depending on dates."
+    canceled: "Payment canceled. Your selection remains available depending on dates.",
+    extras: "Extras",
+    total: "Total"
   }
 };
 
@@ -172,6 +212,37 @@ const formatCurrency = (cents) => {
     currency: "EUR"
   }).format(cents / 100);
 };
+
+function getSelectedUpsells() {
+  const list = [];
+  if (bookingForm?.elements?.upsell_spa?.checked) list.push("spa");
+  if (bookingForm?.elements?.upsell_transfer?.checked) list.push("transfer");
+  if (bookingForm?.elements?.upsell_dinner?.checked) list.push("dinner");
+  return list;
+}
+
+function upsellTotalCents() {
+  return getSelectedUpsells().reduce((sum, key) => sum + (UPSELL_PRICES[key] || 0), 0);
+}
+
+function updateBookingSteps() {
+  if (!stepEls.length || !stepProgressBar) {
+    return;
+  }
+
+  const hasStay = !!roomSelect?.value && !!checkinInput?.value && !!checkoutInput?.value && checkoutInput.value > checkinInput.value;
+  const hasIdentity = !!bookingForm?.elements?.name?.value?.trim() && !!bookingForm?.elements?.email?.value?.trim();
+
+  let currentStep = 1;
+  if (hasStay) currentStep = 2;
+  if (hasStay && hasIdentity) currentStep = 3;
+
+  stepEls.forEach((step, i) => {
+    step.classList.toggle("active", i < currentStep);
+  });
+
+  stepProgressBar.style.width = currentStep === 1 ? "0%" : currentStep === 2 ? "50%" : "100%";
+}
 
 const translatePage = (lang) => {
   document.documentElement.lang = lang;
@@ -206,6 +277,18 @@ const revealObserver = new IntersectionObserver(
 );
 
 document.querySelectorAll(".reveal").forEach((item) => revealObserver.observe(item));
+
+document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+  anchor.addEventListener("click", (event) => {
+    const href = anchor.getAttribute("href");
+    if (!href || href === "#") return;
+    const target = document.querySelector(href);
+    if (!target) return;
+    event.preventDefault();
+    const top = target.getBoundingClientRect().top + window.scrollY - 84;
+    window.scrollTo({ top, behavior: "smooth" });
+  });
+});
 
 const langToggle = document.getElementById("langToggle");
 langToggle?.addEventListener("click", () => {
@@ -277,6 +360,7 @@ document.querySelectorAll("[data-chat]").forEach((btn) => {
 });
 
 function getBookingPayload() {
+  const upsells = getSelectedUpsells();
   return {
     roomId: roomSelect?.value,
     guests: guestsSelect?.value,
@@ -284,7 +368,8 @@ function getBookingPayload() {
     email: bookingForm?.elements?.email?.value?.trim(),
     checkin: checkinInput?.value,
     checkout: checkoutInput?.value,
-    locale: currentLang
+    locale: currentLang,
+    upsells
   };
 }
 
@@ -302,13 +387,18 @@ function renderQuote(quote) {
     return;
   }
 
+  const extras = upsellTotalCents();
+  const total = quote.totalCents + extras;
+  const extrasText = extras > 0 ? `, ${uiText[currentLang].extras} ${formatCurrency(extras)}` : "";
   summaryLine.textContent = currentLang === "fr"
-    ? `${quote.roomName}, ${quote.nights} nuit(s), total ${formatCurrency(quote.totalCents)}.`
-    : `${quote.roomName}, ${quote.nights} night(s), total ${formatCurrency(quote.totalCents)}.`;
+    ? `${quote.roomName}, ${quote.nights} nuit(s), ${uiText[currentLang].total} ${formatCurrency(total)}${extrasText}.`
+    : `${quote.roomName}, ${quote.nights} night(s), ${uiText[currentLang].total} ${formatCurrency(total)}${extrasText}.`;
 }
 
 async function refreshQuote() {
   const payload = getBookingPayload();
+
+  updateBookingSteps();
 
   if (!payload.checkin || !payload.checkout) {
     latestQuote = null;
@@ -351,11 +441,12 @@ async function refreshQuote() {
 }
 
 let quoteDebounce;
-[roomSelect, guestsSelect, checkinInput, checkoutInput].forEach((input) => {
+[roomSelect, guestsSelect, checkinInput, checkoutInput, bookingForm?.elements?.upsell_spa, bookingForm?.elements?.upsell_transfer, bookingForm?.elements?.upsell_dinner, bookingForm?.elements?.name, bookingForm?.elements?.email].forEach((input) => {
   input?.addEventListener("change", () => {
     clearTimeout(quoteDebounce);
-    quoteDebounce = setTimeout(refreshQuote, 220);
+    quoteDebounce = setTimeout(refreshQuote, 200);
   });
+  input?.addEventListener("input", updateBookingSteps);
 });
 
 bookingForm?.addEventListener("submit", async (event) => {
@@ -419,3 +510,4 @@ document.querySelectorAll(".room-book-btn").forEach((btn) => {
 });
 
 translatePage(currentLang);
+updateBookingSteps();

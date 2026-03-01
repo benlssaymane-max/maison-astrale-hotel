@@ -1,5 +1,6 @@
 ﻿:root {
   --bg: #090909;
+  --bg-deep: #060606;
   --bg-soft: #141414;
   --text: #f3ede3;
   --text-muted: #b9ae9a;
@@ -24,7 +25,10 @@ body {
   margin: 0;
   font-family: "Manrope", sans-serif;
   color: var(--text);
-  background: radial-gradient(circle at top right, #1a1510 0%, var(--bg) 45%), var(--bg);
+  background:
+    radial-gradient(circle at 92% -10%, rgba(227, 185, 109, 0.16), transparent 32%),
+    radial-gradient(circle at 4% 15%, rgba(120, 87, 39, 0.16), transparent 24%),
+    var(--bg);
   line-height: 1.65;
 }
 
@@ -78,6 +82,21 @@ p {
 .brand {
   font-size: clamp(1.4rem, 2vw, 2rem);
   color: var(--gold-bright);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.monogram {
+  width: 2.05rem;
+  height: 2.05rem;
+  display: inline-grid;
+  place-items: center;
+  border: 1px solid rgba(241, 212, 155, 0.55);
+  border-radius: 999px;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  background: rgba(241, 212, 155, 0.08);
 }
 
 .main-nav {
@@ -137,9 +156,27 @@ p {
 }
 
 .btn-gold {
+  position: relative;
+  overflow: hidden;
   color: #1a1205;
   background: linear-gradient(120deg, #8f6b35, #c7a86c 40%, #f1d49b 58%, #a77d42);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35), 0 9px 24px rgba(199, 168, 108, 0.33);
+}
+
+.btn-gold::after {
+  content: "";
+  position: absolute;
+  top: -130%;
+  left: -35%;
+  width: 36%;
+  height: 360%;
+  transform: rotate(22deg);
+  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.42), transparent);
+  transition: left 0.45s ease;
+}
+
+.btn-gold:hover::after {
+  left: 120%;
 }
 
 .btn-outline {
@@ -154,14 +191,6 @@ p {
   place-items: center;
   position: relative;
   overflow: hidden;
-}
-
-.hero-video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
 .hero-3d {
@@ -189,6 +218,19 @@ p {
   z-index: 2;
   width: min(820px, 90vw);
   text-align: center;
+}
+
+.hero-kicker {
+  margin: 0 auto 0.8rem;
+  width: fit-content;
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  color: #f7e8ca;
+  background: rgba(241, 212, 155, 0.1);
+  border: 1px solid rgba(241, 212, 155, 0.35);
 }
 
 .eyebrow {
@@ -255,6 +297,10 @@ p {
   border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
+.rooms {
+  background: linear-gradient(180deg, rgba(11, 10, 10, 0.92), rgba(7, 7, 7, 0.97));
+}
+
 .room-grid,
 .service-grid,
 .testimonial-grid,
@@ -269,7 +315,7 @@ p {
 .room-grid {
   display: grid;
   gap: 1.2rem;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
 }
 
 .room-card {
@@ -278,6 +324,22 @@ p {
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.room-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 28px 44px rgba(0, 0, 0, 0.44);
+}
+
+.room-card-feature {
+  grid-column: span 4;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+}
+
+.room-card:not(.room-card-feature) {
+  grid-column: span 2;
 }
 
 .room-card > div {
@@ -292,6 +354,13 @@ p {
 
 .room-card p {
   color: var(--text-muted);
+}
+
+.room-meta {
+  font-size: 0.86rem;
+  color: #e6cb98;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .service-grid {
@@ -337,6 +406,29 @@ p {
 .split p {
   color: var(--text-muted);
   margin-top: 1rem;
+}
+
+.experience-timeline {
+  margin-top: 1.2rem;
+  border-left: 1px solid rgba(241, 212, 155, 0.4);
+  padding-left: 1rem;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.experience-timeline article {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.experience-timeline span {
+  color: #f1d49b;
+  font-size: 0.82rem;
+  letter-spacing: 0.16em;
+}
+
+.experience-timeline p {
+  margin: 0;
 }
 
 .masonry {
@@ -424,6 +516,66 @@ figcaption {
   gap: 0.85rem;
 }
 
+.booking-steps {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin-bottom: 0.15rem;
+}
+
+.step {
+  display: grid;
+  justify-items: center;
+  gap: 0.35rem;
+}
+
+.step span {
+  width: 1.8rem;
+  height: 1.8rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  color: var(--text-muted);
+}
+
+.step small {
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-size: 0.66rem;
+}
+
+.step.active span {
+  color: #1a1205;
+  background: linear-gradient(120deg, #8f6b35, #f1d49b);
+  border-color: transparent;
+}
+
+.step.active small {
+  color: #f1d49b;
+}
+
+.step-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0.86rem;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.16);
+  z-index: -1;
+}
+
+.step-progress i {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #8f6b35, #f1d49b);
+  transition: width 0.35s ease;
+}
+
 .booking-form span,
 .booking-form legend {
   display: block;
@@ -443,6 +595,24 @@ figcaption {
 
 .booking-summary p {
   color: var(--text);
+}
+
+.upsell-fieldset {
+  border: 1px solid rgba(241, 212, 155, 0.28);
+  background: rgba(241, 212, 155, 0.04);
+  border-radius: 12px;
+}
+
+.upsell-item {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 0.35rem;
+}
+
+.upsell-item input {
+  width: auto;
+  accent-color: #d3b478;
 }
 
 .booking-status {
@@ -565,6 +735,25 @@ fieldset {
   gap: 1rem;
 }
 
+.site-footer .footer-links a {
+  position: relative;
+}
+
+.site-footer .footer-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.15rem;
+  width: 0;
+  height: 1px;
+  background: var(--gold);
+  transition: width 0.35s ease;
+}
+
+.site-footer .footer-links a:hover::after {
+  width: 100%;
+}
+
 .reveal {
   opacity: 0;
   transform: translateY(22px);
@@ -587,6 +776,15 @@ fieldset {
     grid-template-columns: 1fr 1fr;
   }
 
+  .room-card-feature,
+  .room-card:not(.room-card-feature) {
+    grid-column: auto;
+  }
+
+  .room-card-feature {
+    grid-template-columns: 1fr;
+  }
+
   .split,
   .contact-grid {
     grid-template-columns: 1fr;
@@ -605,6 +803,12 @@ fieldset {
 
   .hero h1 {
     font-size: 2.4rem;
+    line-height: 1.07;
+  }
+
+  .hero-kicker {
+    font-size: 0.67rem;
+    letter-spacing: 0.13em;
   }
 
   .section {

@@ -16,6 +16,12 @@
   }
 };
 
+const UPSELLS = {
+  spa: { name: "Rituel Spa Privé", amountCents: 22000 },
+  transfer: { name: "Transfert Aéroport Premium", amountCents: 16000 },
+  dinner: { name: "Dîner Dégustation Privé", amountCents: 29000 }
+};
+
 function parseDateInput(dateStr) {
   const date = new Date(`${dateStr}T00:00:00Z`);
   if (Number.isNaN(date.getTime())) {
@@ -39,7 +45,14 @@ function hashForAvailability(input) {
   return Math.abs(hash);
 }
 
-function buildQuote({ roomId, checkinStr, checkoutStr, guests }) {
+function normalizeUpsells(upsells) {
+  if (!Array.isArray(upsells)) {
+    return [];
+  }
+  return upsells.filter((item) => Object.prototype.hasOwnProperty.call(UPSELLS, item));
+}
+
+function buildQuote({ roomId, checkinStr, checkoutStr, guests, upsells }) {
   const room = ROOM_CATALOG[roomId];
   if (!room) {
     return { error: "invalid_room" };
@@ -68,7 +81,9 @@ function buildQuote({ roomId, checkinStr, checkoutStr, guests }) {
   const subtotalCents = room.nightlyRateCents * nights;
   const cityTaxCents = 450 * guestsCount * nights;
   const serviceFeeCents = Math.round(subtotalCents * 0.045);
-  const totalCents = subtotalCents + cityTaxCents + serviceFeeCents;
+  const selectedUpsells = normalizeUpsells(upsells);
+  const extrasCents = selectedUpsells.reduce((sum, item) => sum + UPSELLS[item].amountCents, 0);
+  const totalCents = subtotalCents + cityTaxCents + serviceFeeCents + extrasCents;
 
   return {
     room,
@@ -80,11 +95,14 @@ function buildQuote({ roomId, checkinStr, checkoutStr, guests }) {
     subtotalCents,
     cityTaxCents,
     serviceFeeCents,
+    upsells: selectedUpsells,
+    extrasCents,
     totalCents
   };
 }
 
 module.exports = {
   ROOM_CATALOG,
+  UPSELLS,
   buildQuote
 };

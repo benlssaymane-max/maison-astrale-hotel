@@ -10,6 +10,7 @@
   <meta property="og:description" content="Vivez une expérience d'hospitalité rare, entre élégance contemporaine et sérénité absolue." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1400&q=80" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -19,7 +20,7 @@
   <div class="grain" aria-hidden="true"></div>
 
   <header class="site-header" id="top">
-    <a href="#top" class="brand">Maison Astrale</a>
+    <a href="#top" class="brand"><span class="monogram">MA</span> Maison Astrale</a>
     <nav class="main-nav" aria-label="Main navigation">
       <a href="#home" data-i18n="nav_home">Accueil</a>
       <a href="#rooms" data-i18n="nav_rooms">Chambres & Suites</a>
@@ -43,6 +44,7 @@
       <div class="overlay"></div>
       <div class="hero-content reveal">
         <p class="eyebrow" data-i18n="hero_eyebrow">Hôtel 5 étoiles · Côte d'Azur</p>
+        <p class="hero-kicker" data-i18n="hero_kicker">Collection Privée · Since 1928</p>
         <h1 data-i18n="hero_title">L'art de l'hospitalité en version absolue</h1>
         <p data-i18n="hero_text">Un sanctuaire contemporain où chaque détail célèbre le calme, le prestige et l'exclusivité.</p>
         <div class="hero-actions">
@@ -62,11 +64,12 @@
         <h2 data-i18n="rooms_title">Résidences pensées pour l'exception</h2>
       </div>
       <div class="room-grid">
-        <article class="room-card reveal">
+        <article class="room-card room-card-feature reveal">
           <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1200&q=80" alt="Suite Signature" loading="lazy" />
           <div>
             <h3 data-i18n="room1_title">Suite Signature Mer</h3>
             <p data-i18n="room1_text">120 m², terrasse panoramique, majordome dédié, bain marbre et salon privé.</p>
+            <p class="room-meta" data-i18n="room1_meta">À partir de 1 800€ / nuit · Vue frontale mer</p>
             <button class="btn btn-gold room-book-btn" data-room="suite_signature" data-i18n="room_book">Réserver cette suite</button>
           </div>
         </article>
@@ -75,6 +78,7 @@
           <div>
             <h3 data-i18n="room2_title">Chambre Prestige Jardin</h3>
             <p data-i18n="room2_text">Lumière naturelle, literie couture, espace lounge et service petit-déjeuner en suite.</p>
+            <p class="room-meta" data-i18n="room2_meta">À partir de 1 100€ / nuit · Jardin privé</p>
             <button class="btn btn-gold room-book-btn" data-room="chambre_prestige" data-i18n="room_book">Réserver cette suite</button>
           </div>
         </article>
@@ -83,6 +87,7 @@
           <div>
             <h3 data-i18n="room3_title">Penthouse Astrale</h3>
             <p data-i18n="room3_text">Piscine privée, cuisine de chef, vue mer à 270° et expérience concierge 24/7.</p>
+            <p class="room-meta" data-i18n="room3_meta">À partir de 3 200€ / nuit · Piscine privée</p>
             <button class="btn btn-gold room-book-btn" data-room="penthouse_astrale" data-i18n="room_book">Réserver cette suite</button>
           </div>
         </article>
@@ -117,6 +122,20 @@
           <h2 data-i18n="exp_title">Un récit de sérénité, de design et de distinction</h2>
           <p data-i18n="exp_text1">Chaque matin commence avec une lumière douce sur la Méditerranée, chaque soirée s'achève autour d'un service irréprochable.</p>
           <p data-i18n="exp_text2">Maison Astrale met en scène un luxe discret: silencieux, personnalisé, profondément mémorable.</p>
+          <div class="experience-timeline">
+            <article>
+              <span>07:00</span>
+              <p data-i18n="timeline_1">Petit-déjeuner privé face à la mer.</p>
+            </article>
+            <article>
+              <span>14:00</span>
+              <p data-i18n="timeline_2">Rituel spa signature et sieste panoramique.</p>
+            </article>
+            <article>
+              <span>20:30</span>
+              <p data-i18n="timeline_3">Dîner dégustation et terrasse étoilée.</p>
+            </article>
+          </div>
         </div>
         <img src="https://images.unsplash.com/photo-1455587734955-081b22074882?auto=format&fit=crop&w=1200&q=80" alt="Lifestyle de luxe" loading="lazy" />
       </div>
@@ -170,6 +189,12 @@
       </div>
       <div class="contact-grid reveal">
         <form class="booking-form" aria-label="Formulaire de réservation" id="bookingForm">
+          <div class="booking-steps" id="bookingSteps" aria-hidden="true">
+            <div class="step active"><span>1</span><small data-i18n="step_stay">Séjour</small></div>
+            <div class="step"><span>2</span><small data-i18n="step_options">Options</small></div>
+            <div class="step"><span>3</span><small data-i18n="step_payment">Paiement</small></div>
+            <div class="step-progress"><i id="stepProgressBar"></i></div>
+          </div>
           <label>
             <span data-i18n="form_name">Nom complet</span>
             <input type="text" name="name" required />
@@ -205,6 +230,21 @@
               <option value="4">4</option>
             </select>
           </label>
+          <fieldset class="upsell-fieldset">
+            <legend data-i18n="upsell_title">Options Signature</legend>
+            <label class="upsell-item">
+              <input type="checkbox" name="upsell_spa" value="spa" />
+              <span data-i18n="upsell_spa">Rituel Spa Privé (+220€)</span>
+            </label>
+            <label class="upsell-item">
+              <input type="checkbox" name="upsell_transfer" value="transfer" />
+              <span data-i18n="upsell_transfer">Transfert Aéroport Premium (+160€)</span>
+            </label>
+            <label class="upsell-item">
+              <input type="checkbox" name="upsell_dinner" value="dinner" />
+              <span data-i18n="upsell_dinner">Dîner Dégustation Privé (+290€)</span>
+            </label>
+          </fieldset>
           <div class="booking-summary" id="bookingSummary">
             <p><strong data-i18n="summary_title">Résumé instantané</strong></p>
             <p id="summaryLine" data-i18n="summary_idle">Sélectionnez vos dates pour afficher le tarif total.</p>

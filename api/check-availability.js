@@ -7,12 +7,13 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const { roomId, checkin, checkout, guests } = req.body || {};
+    const { roomId, checkin, checkout, guests, upsells } = req.body || {};
     const quote = buildQuote({
       roomId,
       checkinStr: checkin,
       checkoutStr: checkout,
-      guests
+      guests,
+      upsells
     });
 
     if (quote.error) {
@@ -35,6 +36,7 @@ module.exports = async function handler(req, res) {
       subtotalCents: quote.subtotalCents,
       cityTaxCents: quote.cityTaxCents,
       serviceFeeCents: quote.serviceFeeCents,
+      extrasCents: quote.extrasCents,
       totalCents: quote.totalCents
     });
   } catch (error) {
