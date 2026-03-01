@@ -16,6 +16,22 @@
     hero_metric_1: "Vue panoramique iconique",
     hero_metric_2: "Conciergerie privée",
     hero_metric_3: "Expériences signature",
+    reel_eyebrow: "Flagship Experience",
+    reel_title: "Chaque instant est scénarisé comme une signature",
+    reel_text: "De l’arrivée à la suite, du spa à la table privée, chaque détail est pensé pour créer une mémoire rare et mesurablement supérieure.",
+    reel_cta: "Explorer les expériences",
+    prestige_1: "Forbes Travel Guide",
+    prestige_2: "Condé Nast Traveler Selection",
+    prestige_3: "World Luxury Hotel Awards",
+    prestige_4: "Michelin-Level Hospitality",
+    pillars_eyebrow: "Notre Signature",
+    pillars_title: "Trois piliers d'un luxe maîtrisé",
+    pillar_1_title: "Architecture & Silence",
+    pillar_1_text: "Volumes nobles, matières minérales, acoustique feutrée: un espace qui apaise et élève.",
+    pillar_2_title: "Service Invisible",
+    pillar_2_text: "Une équipe dédiée anticipe chaque besoin avec précision, sans jamais rompre l’intimité du séjour.",
+    pillar_3_title: "Rythme Personnalisé",
+    pillar_3_text: "Wellness, gastronomie, excursions privées: chaque journée suit votre tempo, jamais l’inverse.",
     trust_rating: "4.9/5 · 2 800+ avis vérifiés",
     trust_award: "World Luxury Hotel Awards",
     audio_label: "Ambiance: Off",
@@ -100,6 +116,22 @@
     hero_metric_1: "Iconic skyline views",
     hero_metric_2: "Private concierge",
     hero_metric_3: "Signature experiences",
+    reel_eyebrow: "Flagship Experience",
+    reel_title: "Every moment is designed as a signature",
+    reel_text: "From arrival to suite, from spa to private dining, each detail is curated to create a rare and measurable standard of luxury.",
+    reel_cta: "Explore experiences",
+    prestige_1: "Forbes Travel Guide",
+    prestige_2: "Condé Nast Traveler Selection",
+    prestige_3: "World Luxury Hotel Awards",
+    prestige_4: "Michelin-Level Hospitality",
+    pillars_eyebrow: "Our Signature",
+    pillars_title: "Three pillars of mastered luxury",
+    pillar_1_title: "Architecture & Silence",
+    pillar_1_text: "Noble volumes, mineral textures, and acoustic calm create a space that elevates and restores.",
+    pillar_2_title: "Invisible Service",
+    pillar_2_text: "A dedicated team anticipates every need with precision, without disturbing the intimacy of your stay.",
+    pillar_3_title: "Personalized Rhythm",
+    pillar_3_text: "Wellness, gastronomy, and private outings are orchestrated around your tempo, never the reverse.",
     trust_rating: "4.9/5 · 2,800+ verified reviews",
     trust_award: "World Luxury Hotel Awards",
     audio_label: "Ambience: Off",
@@ -194,6 +226,7 @@ const mobileNavClose = document.getElementById("mobileNavClose");
 const mobileNavPanel = document.getElementById("mobileNavPanel");
 const siteHeader = document.querySelector(".site-header");
 const heroSlides = Array.from(document.querySelectorAll(".hero-slide"));
+const navLinks = Array.from(document.querySelectorAll(".main-nav a"));
 
 const uiText = {
   fr: {
@@ -317,6 +350,29 @@ function updateHeaderState() {
     return;
   }
   siteHeader.classList.toggle("scrolled", window.scrollY > 24);
+}
+
+function setupActiveNav() {
+  const sections = Array.from(document.querySelectorAll("main section[id]"));
+  if (!sections.length || !navLinks.length) {
+    return;
+  }
+
+  const sectionObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const id = entry.target.getAttribute("id");
+        navLinks.forEach((link) => {
+          const active = link.getAttribute("href") === `#${id}`;
+          link.classList.toggle("active", active);
+        });
+      });
+    },
+    { rootMargin: "-35% 0px -55% 0px", threshold: 0.01 }
+  );
+
+  sections.forEach((section) => sectionObserver.observe(section));
 }
 
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
@@ -575,6 +631,7 @@ updateBookingSteps();
 applyDayNightMode();
 startHeroSlider();
 updateHeaderState();
+setupActiveNav();
 window.addEventListener("scroll", updateHeaderState, { passive: true });
 window.setInterval(applyDayNightMode, 60000);
 
