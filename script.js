@@ -15,11 +15,6 @@
     hero_text: "Un sanctuaire contemporain où chaque détail célèbre le calme, le prestige et l'exclusivité.",
     trust_rating: "4.9/5 · 2 800+ avis vérifiés",
     trust_award: "World Luxury Hotel Awards",
-    quick_checkin: "Arrivée",
-    quick_checkout: "Départ",
-    quick_room: "Suite",
-    quick_guests: "Voyageurs",
-    quick_cta: "Voir disponibilité & prix",
     audio_label: "Ambiance: Off",
     rooms_eyebrow: "Chambres & Suites",
     rooms_title: "Résidences pensées pour l'exception",
@@ -101,11 +96,6 @@
     hero_text: "A contemporary sanctuary where every detail embodies calm, prestige, and exclusivity.",
     trust_rating: "4.9/5 · 2,800+ verified reviews",
     trust_award: "World Luxury Hotel Awards",
-    quick_checkin: "Check-in",
-    quick_checkout: "Check-out",
-    quick_room: "Suite",
-    quick_guests: "Guests",
-    quick_cta: "View availability & rate",
     audio_label: "Ambience: Off",
     rooms_eyebrow: "Rooms & Suites",
     rooms_title: "Residences designed for distinction",
@@ -198,12 +188,6 @@ const mobileNavClose = document.getElementById("mobileNavClose");
 const mobileNavPanel = document.getElementById("mobileNavPanel");
 const siteHeader = document.querySelector(".site-header");
 const heroSlides = Array.from(document.querySelectorAll(".hero-slide"));
-const heroQuickBook = document.getElementById("heroQuickBook");
-const quickCheckin = document.getElementById("quickCheckin");
-const quickCheckout = document.getElementById("quickCheckout");
-const quickRoom = document.getElementById("quickRoom");
-const quickGuests = document.getElementById("quickGuests");
-const quickStatus = document.getElementById("quickStatus");
 
 const uiText = {
   fr: {
@@ -216,10 +200,7 @@ const uiText = {
     paid: "Paiement confirmé. Votre équipe conciergerie vous contacte sous peu.",
     canceled: "Paiement annulé. Votre sélection est toujours disponible selon les dates.",
     extras: "Options",
-    total: "Total",
-    quickReady: "Disponible. À partir de",
-    quickUnavailable: "Indisponible sur ces dates.",
-    quickInvalid: "Vérifiez les dates sélectionnées."
+    total: "Total"
   },
   en: {
     checking: "Checking live availability...",
@@ -231,10 +212,7 @@ const uiText = {
     paid: "Payment confirmed. Our concierge team will contact you shortly.",
     canceled: "Payment canceled. Your selection remains available depending on dates.",
     extras: "Extras",
-    total: "Total",
-    quickReady: "Available. Starting at",
-    quickUnavailable: "Unavailable on these dates.",
-    quickInvalid: "Please check your selected dates."
+    total: "Total"
   }
 };
 
@@ -477,60 +455,6 @@ function renderQuote(quote) {
     ? `${quote.roomName}, ${quote.nights} nuit(s), ${uiText[currentLang].total} ${formatCurrency(total)}${extrasText}.`
     : `${quote.roomName}, ${quote.nights} night(s), ${uiText[currentLang].total} ${formatCurrency(total)}${extrasText}.`;
 }
-
-function setQuickStatus(message, isError = false) {
-  if (!quickStatus) {
-    return;
-  }
-  quickStatus.textContent = message;
-  quickStatus.classList.toggle("error", isError);
-}
-
-heroQuickBook?.addEventListener("submit", async (event) => {
-  event.preventDefault();
-  const payload = {
-    roomId: quickRoom?.value,
-    guests: quickGuests?.value,
-    checkin: quickCheckin?.value,
-    checkout: quickCheckout?.value,
-    locale: currentLang,
-    upsells: []
-  };
-
-  if (!payload.checkin || !payload.checkout || payload.checkout <= payload.checkin) {
-    setQuickStatus(uiText[currentLang].quickInvalid, true);
-    return;
-  }
-
-  setQuickStatus(uiText[currentLang].checking);
-  try {
-    const response = await fetch("/api/check-availability", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
-    const data = await response.json();
-
-    if (!response.ok) {
-      setQuickStatus(uiText[currentLang].quickUnavailable, true);
-      return;
-    }
-
-    setQuickStatus(`${uiText[currentLang].quickReady} ${formatCurrency(data.totalCents)}`);
-
-    if (roomSelect) roomSelect.value = payload.roomId;
-    if (guestsSelect) guestsSelect.value = payload.guests;
-    if (checkinInput) checkinInput.value = payload.checkin;
-    if (checkoutInput) checkoutInput.value = payload.checkout;
-    refreshQuote();
-
-    window.setTimeout(() => {
-      document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 280);
-  } catch {
-    setQuickStatus(uiText[currentLang].genericError, true);
-  }
-});
 
 async function refreshQuote() {
   const payload = getBookingPayload();

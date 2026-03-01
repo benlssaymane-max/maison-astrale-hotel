@@ -314,12 +314,26 @@ p {
   overflow: hidden;
 }
 
+.hero-palace::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 4%;
+  width: min(900px, 88vw);
+  height: min(900px, 88vw);
+  transform: translateX(-50%);
+  border-radius: 50% 50% 0 0;
+  border: 1px solid rgba(241, 212, 155, 0.2);
+  opacity: 0.45;
+  pointer-events: none;
+}
+
 .palace-glow {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 50% 45%, rgba(246, 218, 167, 0.32), rgba(176, 123, 52, 0.15) 28%, transparent 55%),
-    linear-gradient(180deg, #19120d 0%, #0f0d0b 65%, #090909 100%);
+    radial-gradient(circle at 50% 40%, rgba(250, 222, 170, 0.45), rgba(208, 146, 62, 0.19) 32%, transparent 56%),
+    linear-gradient(180deg, #24170f 0%, #130d09 62%, #080808 100%);
 }
 
 .palace-door {
@@ -383,13 +397,13 @@ p {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 50% 70%, rgba(196, 145, 65, 0.12), transparent 52%),
-    linear-gradient(180deg, rgba(7, 7, 8, 0.38), rgba(8, 7, 7, 0.84));
+    radial-gradient(circle at 50% 68%, rgba(224, 173, 92, 0.15), transparent 49%),
+    linear-gradient(180deg, rgba(5, 5, 6, 0.3), rgba(6, 5, 5, 0.87));
 }
 
 .day-mode .hero-palace .palace-glow {
   background:
-    radial-gradient(circle at 50% 38%, rgba(252, 228, 179, 0.34), rgba(221, 169, 87, 0.19) 30%, transparent 60%),
+    radial-gradient(circle at 50% 38%, rgba(252, 228, 179, 0.42), rgba(221, 169, 87, 0.24) 30%, transparent 60%),
     linear-gradient(180deg, #2a2219 0%, #17120d 70%, #0d0a08 100%);
 }
 
@@ -424,6 +438,7 @@ p {
 .hero h1 {
   font-size: clamp(2.7rem, 7vw, 5.2rem);
   line-height: 1.04;
+  text-shadow: 0 10px 36px rgba(0, 0, 0, 0.45);
 }
 
 .hero p {
@@ -485,45 +500,6 @@ p {
   background: rgba(241, 212, 155, 0.06);
   border-radius: 999px;
   padding: 0.32rem 0.62rem;
-}
-
-.hero-quick-book {
-  position: absolute;
-  left: 50%;
-  bottom: 4.5rem;
-  transform: translateX(-50%);
-  width: min(1050px, 93vw);
-  z-index: 3;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr)) auto;
-  gap: 0.6rem;
-  align-items: end;
-  background: rgba(8, 8, 8, 0.74);
-  border: 1px solid rgba(241, 212, 155, 0.28);
-  backdrop-filter: blur(10px);
-  border-radius: 14px;
-  padding: 0.7rem;
-}
-
-.hero-quick-book label span {
-  display: block;
-  margin-bottom: 0.25rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 0.68rem;
-  color: #f1d49b;
-}
-
-.quick-status {
-  grid-column: 1 / -1;
-  margin-top: 0.15rem;
-  font-size: 0.84rem;
-  color: #f1d49b;
-  min-height: 1.05rem;
-}
-
-.quick-status.error {
-  color: #f2b5b5;
 }
 
 .audio-toggle {
@@ -1060,11 +1036,6 @@ fieldset {
     grid-template-columns: 1fr;
   }
 
-  .hero-quick-book {
-    grid-template-columns: 1fr 1fr;
-    bottom: 3.4rem;
-  }
-
   .hero-slider {
     height: 150px;
   }
@@ -1097,17 +1068,6 @@ fieldset {
   .hero-trust {
     width: 100%;
     justify-content: flex-start;
-  }
-
-  .hero-quick-book {
-    position: static;
-    transform: none;
-    margin: 1rem auto 0;
-    grid-template-columns: 1fr;
-  }
-
-  .quick-status {
-    font-size: 0.78rem;
   }
 
   .section {
