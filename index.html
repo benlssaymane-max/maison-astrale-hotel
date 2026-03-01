@@ -1,0 +1,245 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maison Astrale | Hôtel de Luxe</title>
+  <meta name="description" content="Maison Astrale, hôtel de luxe ultra premium : suites d'exception, spa signature, gastronomie et expérience lifestyle exclusive." />
+  <meta name="keywords" content="hôtel de luxe, suites premium, spa, réservation hôtel, palace" />
+  <meta property="og:title" content="Maison Astrale | Hôtel de Luxe" />
+  <meta property="og:description" content="Vivez une expérience d'hospitalité rare, entre élégance contemporaine et sérénité absolue." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1400&q=80" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="site-header" id="top">
+    <a href="#top" class="brand">Maison Astrale</a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="#home" data-i18n="nav_home">Accueil</a>
+      <a href="#rooms" data-i18n="nav_rooms">Chambres & Suites</a>
+      <a href="#services" data-i18n="nav_services">Services & Spa</a>
+      <a href="#experience" data-i18n="nav_experience">Expérience</a>
+      <a href="#gallery" data-i18n="nav_gallery">Galerie</a>
+      <a href="#testimonials" data-i18n="nav_reviews">Avis</a>
+      <a href="#contact" data-i18n="nav_contact">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <button class="lang-toggle" id="langToggle" aria-label="Changer la langue">EN</button>
+      <a class="btn btn-gold" href="#contact" data-i18n="cta_book">Réserver maintenant</a>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="hero parallax">
+      <video class="hero-video" autoplay muted loop playsinline>
+        <source src="https://cdn.coverr.co/videos/coverr-luxury-resort-by-the-sea-1579/1080p.mp4" type="video/mp4" />
+      </video>
+      <div class="overlay"></div>
+      <div class="hero-content reveal">
+        <p class="eyebrow" data-i18n="hero_eyebrow">Hôtel 5 étoiles · Côte d'Azur</p>
+        <h1 data-i18n="hero_title">L'art de l'hospitalité en version absolue</h1>
+        <p data-i18n="hero_text">Un sanctuaire contemporain où chaque détail célèbre le calme, le prestige et l'exclusivité.</p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-gold" data-i18n="cta_book">Réserver maintenant</a>
+          <a href="#experience" class="btn btn-outline" data-i18n="cta_discover">Découvrir l'expérience</a>
+        </div>
+      </div>
+      <button class="audio-toggle" id="audioToggle" data-i18n="audio_label">Ambiance: Off</button>
+      <audio id="ambienceAudio" loop preload="none">
+        <source src="https://cdn.pixabay.com/download/audio/2022/03/24/audio_56f4f7d95f.mp3?filename=calm-ambient-110400.mp3" type="audio/mpeg" />
+      </audio>
+    </section>
+
+    <section id="rooms" class="section rooms">
+      <div class="section-head reveal">
+        <p class="eyebrow" data-i18n="rooms_eyebrow">Chambres & Suites</p>
+        <h2 data-i18n="rooms_title">Résidences pensées pour l'exception</h2>
+      </div>
+      <div class="room-grid">
+        <article class="room-card reveal">
+          <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1200&q=80" alt="Suite Signature" loading="lazy" />
+          <div>
+            <h3 data-i18n="room1_title">Suite Signature Mer</h3>
+            <p data-i18n="room1_text">120 m², terrasse panoramique, majordome dédié, bain marbre et salon privé.</p>
+            <button class="btn btn-gold" data-i18n="room_book">Réserver cette suite</button>
+          </div>
+        </article>
+        <article class="room-card reveal">
+          <img src="https://images.unsplash.com/photo-1591088398332-8a7791972843?auto=format&fit=crop&w=1200&q=80" alt="Chambre Prestige" loading="lazy" />
+          <div>
+            <h3 data-i18n="room2_title">Chambre Prestige Jardin</h3>
+            <p data-i18n="room2_text">Lumière naturelle, literie couture, espace lounge et service petit-déjeuner en suite.</p>
+            <button class="btn btn-gold" data-i18n="room_book">Réserver cette suite</button>
+          </div>
+        </article>
+        <article class="room-card reveal">
+          <img src="https://images.unsplash.com/photo-1445019980597-93fa8acb246c?auto=format&fit=crop&w=1200&q=80" alt="Penthouse" loading="lazy" />
+          <div>
+            <h3 data-i18n="room3_title">Penthouse Astrale</h3>
+            <p data-i18n="room3_text">Piscine privée, cuisine de chef, vue mer à 270° et expérience concierge 24/7.</p>
+            <button class="btn btn-gold" data-i18n="room_book">Réserver cette suite</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="services" class="section services parallax-soft">
+      <div class="section-head reveal">
+        <p class="eyebrow" data-i18n="services_eyebrow">Services & Spa</p>
+        <h2 data-i18n="services_title">Bien-être, gastronomie et privilèges privés</h2>
+      </div>
+      <div class="service-grid">
+        <article class="reveal">
+          <h3 data-i18n="service1_title">Spa Signature Astral</h3>
+          <p data-i18n="service1_text">Rituels personnalisés, hammam minéral, soins holistiques et suites de relaxation.</p>
+        </article>
+        <article class="reveal">
+          <h3 data-i18n="service2_title">Restaurant Étoilé</h3>
+          <p data-i18n="service2_text">Menu dégustation orchestral, cave d'exception et terrasse sunset réservée.</p>
+        </article>
+        <article class="reveal">
+          <h3 data-i18n="service3_title">Activités Exclusives</h3>
+          <p data-i18n="service3_text">Yacht privé, transferts en hélicoptère, expériences culturelles sur mesure.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="experience" class="section experience">
+      <div class="split reveal">
+        <div>
+          <p class="eyebrow" data-i18n="exp_eyebrow">Expérience & Lifestyle</p>
+          <h2 data-i18n="exp_title">Un récit de sérénité, de design et de distinction</h2>
+          <p data-i18n="exp_text1">Chaque matin commence avec une lumière douce sur la Méditerranée, chaque soirée s'achève autour d'un service irréprochable.</p>
+          <p data-i18n="exp_text2">Maison Astrale met en scène un luxe discret: silencieux, personnalisé, profondément mémorable.</p>
+        </div>
+        <img src="https://images.unsplash.com/photo-1455587734955-081b22074882?auto=format&fit=crop&w=1200&q=80" alt="Lifestyle de luxe" loading="lazy" />
+      </div>
+    </section>
+
+    <section id="gallery" class="section gallery">
+      <div class="section-head reveal">
+        <p class="eyebrow" data-i18n="gallery_eyebrow">Galerie / Média</p>
+        <h2 data-i18n="gallery_title">Regards sur la propriété et ses horizons</h2>
+      </div>
+      <div class="masonry">
+        <img class="reveal" src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80" alt="Piscine de luxe" loading="lazy" />
+        <img class="reveal" src="https://images.unsplash.com/photo-1549294413-26f195200c16?auto=format&fit=crop&w=900&q=80" alt="Restaurant" loading="lazy" />
+        <img class="reveal" src="https://images.unsplash.com/photo-1505693314120-0d443867891c?auto=format&fit=crop&w=900&q=80" alt="Suite hôtel" loading="lazy" />
+        <img class="reveal" src="https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=900&q=80" alt="Drone vue mer" loading="lazy" />
+      </div>
+      <div class="social-strip reveal">
+        <p data-i18n="social_title">Instagram</p>
+        <a href="https://instagram.com" target="_blank" rel="noreferrer">@maisonastrale</a>
+      </div>
+    </section>
+
+    <section id="testimonials" class="section testimonials">
+      <div class="section-head reveal">
+        <p class="eyebrow" data-i18n="review_eyebrow">Avis & Témoignages</p>
+        <h2 data-i18n="review_title">Ce que nos hôtes retiennent</h2>
+      </div>
+      <div class="testimonial-grid">
+        <figure class="reveal">
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&q=80" alt="Cliente" loading="lazy" />
+          <blockquote data-i18n="review1">"Un niveau de service rarement rencontré. Tout est pensé avec précision et élégance."</blockquote>
+          <figcaption>Claire M. · Paris</figcaption>
+        </figure>
+        <figure class="reveal">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80" alt="Client" loading="lazy" />
+          <blockquote data-i18n="review2">"La suite, le spa, le restaurant: une expérience cohérente et exceptionnelle."</blockquote>
+          <figcaption>James R. · London</figcaption>
+        </figure>
+        <figure class="reveal">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=300&q=80" alt="Cliente" loading="lazy" />
+          <blockquote data-i18n="review3">"Le concierge a transformé notre séjour en souvenirs inoubliables."</blockquote>
+          <figcaption>Lina S. · Dubai</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="contact" class="section contact">
+      <div class="section-head reveal">
+        <p class="eyebrow" data-i18n="contact_eyebrow">Contact & Réservation</p>
+        <h2 data-i18n="contact_title">Préparez votre prochain séjour</h2>
+      </div>
+      <div class="contact-grid reveal">
+        <form class="booking-form" aria-label="Formulaire de réservation">
+          <label>
+            <span data-i18n="form_name">Nom complet</span>
+            <input type="text" name="name" required />
+          </label>
+          <label>
+            <span data-i18n="form_email">Email</span>
+            <input type="email" name="email" required />
+          </label>
+          <div class="dates">
+            <label>
+              <span data-i18n="form_checkin">Arrivée</span>
+              <input type="date" name="checkin" required />
+            </label>
+            <label>
+              <span data-i18n="form_checkout">Départ</span>
+              <input type="date" name="checkout" required />
+            </label>
+          </div>
+          <label>
+            <span data-i18n="form_room">Type de chambre</span>
+            <select name="room">
+              <option data-i18n="room_opt_1">Suite Signature Mer</option>
+              <option data-i18n="room_opt_2">Chambre Prestige Jardin</option>
+              <option data-i18n="room_opt_3">Penthouse Astrale</option>
+            </select>
+          </label>
+          <fieldset>
+            <legend data-i18n="form_payment">Paiement sécurisé</legend>
+            <div class="payment-grid">
+              <input type="text" placeholder="Card Number" aria-label="Card Number" required />
+              <input type="text" placeholder="MM/YY" aria-label="Expiration" required />
+              <input type="text" placeholder="CVC" aria-label="CVC" required />
+            </div>
+          </fieldset>
+          <button class="btn btn-gold" type="submit" data-i18n="form_submit">Confirmer la réservation</button>
+        </form>
+        <div class="map-wrap">
+          <iframe
+            title="Google Maps Maison Astrale"
+            src="https://www.google.com/maps?q=Nice%20France&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <aside class="concierge" id="concierge">
+    <button class="concierge-toggle" id="conciergeToggle" aria-label="Assistant concierge">Concierge</button>
+    <div class="concierge-panel" id="conciergePanel" hidden>
+      <h3 data-i18n="chat_title">Assistant Concierge</h3>
+      <p data-i18n="chat_text">Besoin d'un transfert, d'une table privée ou d'une recommandation locale ?</p>
+      <div class="chat-actions">
+        <button data-chat="spa" data-i18n="chat_spa">Réserver un soin spa</button>
+        <button data-chat="restaurant" data-i18n="chat_restaurant">Table au restaurant</button>
+        <button data-chat="transfer" data-i18n="chat_transfer">Transfert aéroport</button>
+      </div>
+      <p class="chat-response" id="chatResponse"></p>
+    </div>
+  </aside>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> Maison Astrale</p>
+    <div class="footer-links">
+      <a href="#" data-i18n="footer_privacy">Confidentialité</a>
+      <a href="#" data-i18n="footer_terms">Conditions</a>
+      <a href="https://instagram.com" target="_blank" rel="noreferrer">Instagram</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
