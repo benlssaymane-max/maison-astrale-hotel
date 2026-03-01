@@ -73,7 +73,53 @@
           <a href="#contact" class="btn btn-gold" data-i18n="cta_book">Réserver maintenant</a>
           <a href="#experience" class="btn btn-outline" data-i18n="cta_discover">Découvrir l'expérience</a>
         </div>
+        <div class="hero-slider" aria-hidden="true">
+          <figure class="hero-slide active">
+            <img src="https://images.unsplash.com/photo-1563911302283-d2bc129e7570?auto=format&fit=crop&w=1400&q=80" alt="Couple au bord de piscine de luxe" fetchpriority="high" />
+          </figure>
+          <figure class="hero-slide">
+            <img src="https://images.unsplash.com/photo-1566669437685-d13565a6af99?auto=format&fit=crop&w=1400&q=80" alt="Service premium en chambre" loading="lazy" />
+          </figure>
+          <figure class="hero-slide">
+            <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1400&q=80" alt="Expérience bien-être de luxe" loading="lazy" />
+          </figure>
+        </div>
+        <div class="hero-trust">
+          <span data-i18n="trust_rating">4.9/5 · 2 800+ avis vérifiés</span>
+          <a href="https://www.tripadvisor.com" target="_blank" rel="noreferrer">Tripadvisor</a>
+          <a href="https://www.booking.com" target="_blank" rel="noreferrer">Booking Awards 2025</a>
+          <span data-i18n="trust_award">World Luxury Hotel Awards</span>
+        </div>
       </div>
+      <form class="hero-quick-book reveal" id="heroQuickBook" aria-label="Disponibilités rapides">
+        <label>
+          <span data-i18n="quick_checkin">Arrivée</span>
+          <input type="date" id="quickCheckin" required />
+        </label>
+        <label>
+          <span data-i18n="quick_checkout">Départ</span>
+          <input type="date" id="quickCheckout" required />
+        </label>
+        <label>
+          <span data-i18n="quick_room">Suite</span>
+          <select id="quickRoom">
+            <option value="suite_signature" data-i18n="room_opt_1">Suite Signature Mer</option>
+            <option value="chambre_prestige" data-i18n="room_opt_2">Chambre Prestige Jardin</option>
+            <option value="penthouse_astrale" data-i18n="room_opt_3">Penthouse Astrale</option>
+          </select>
+        </label>
+        <label>
+          <span data-i18n="quick_guests">Voyageurs</span>
+          <select id="quickGuests">
+            <option value="1">1</option>
+            <option value="2" selected>2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
+        </label>
+        <button type="submit" class="btn btn-gold" data-i18n="quick_cta">Voir disponibilité & prix</button>
+        <p id="quickStatus" class="quick-status" aria-live="polite"></p>
+      </form>
       <button class="audio-toggle" id="audioToggle" data-i18n="audio_label">Ambiance: Off</button>
       <audio id="ambienceAudio" loop preload="none">
         <source src="https://cdn.pixabay.com/download/audio/2022/03/24/audio_56f4f7d95f.mp3?filename=calm-ambient-110400.mp3" type="audio/mpeg" />
