@@ -178,6 +178,10 @@ const checkinInput = bookingForm?.elements?.checkin;
 const checkoutInput = bookingForm?.elements?.checkout;
 const stepProgressBar = document.getElementById("stepProgressBar");
 const stepEls = Array.from(document.querySelectorAll(".booking-steps .step"));
+const luxLoader = document.getElementById("luxLoader");
+const mobileNavToggle = document.getElementById("mobileNavToggle");
+const mobileNavClose = document.getElementById("mobileNavClose");
+const mobileNavPanel = document.getElementById("mobileNavPanel");
 
 const uiText = {
   fr: {
@@ -278,6 +282,18 @@ const revealObserver = new IntersectionObserver(
 
 document.querySelectorAll(".reveal").forEach((item) => revealObserver.observe(item));
 
+function applyDayNightMode() {
+  const hour = new Date().getHours();
+  const isDay = hour >= 7 && hour < 19;
+  document.body.classList.toggle("day-mode", isDay);
+}
+
+function runHeroDoorSequence() {
+  window.setTimeout(() => {
+    document.body.classList.add("doors-open");
+  }, 350);
+}
+
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   anchor.addEventListener("click", (event) => {
     const href = anchor.getAttribute("href");
@@ -287,7 +303,27 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     event.preventDefault();
     const top = target.getBoundingClientRect().top + window.scrollY - 84;
     window.scrollTo({ top, behavior: "smooth" });
+    if (mobileNavPanel && !mobileNavPanel.hidden) {
+      mobileNavPanel.hidden = true;
+      document.body.classList.remove("nav-open");
+    }
   });
+});
+
+mobileNavToggle?.addEventListener("click", () => {
+  if (!mobileNavPanel) {
+    return;
+  }
+  mobileNavPanel.hidden = false;
+  document.body.classList.add("nav-open");
+});
+
+mobileNavClose?.addEventListener("click", () => {
+  if (!mobileNavPanel) {
+    return;
+  }
+  mobileNavPanel.hidden = true;
+  document.body.classList.remove("nav-open");
 });
 
 const langToggle = document.getElementById("langToggle");
@@ -511,3 +547,15 @@ document.querySelectorAll(".room-book-btn").forEach((btn) => {
 
 translatePage(currentLang);
 updateBookingSteps();
+applyDayNightMode();
+runHeroDoorSequence();
+window.setInterval(applyDayNightMode, 60000);
+
+window.addEventListener("load", () => {
+  if (!luxLoader) {
+    return;
+  }
+  window.setTimeout(() => {
+    luxLoader.classList.add("hidden");
+  }, 650);
+});
